@@ -1,9 +1,9 @@
 .program image
 .wrap_target
 	wait 1 pin 9 // wait for hsync
-	wait 0 pin 8 // wait for falling pclk
+	wait 1 pin 8 // wait for rising pclk
 	in pins 8
-	wait 1 pin 8
+	wait 0 pin 8
 .wrap
 
 % c-sdk {

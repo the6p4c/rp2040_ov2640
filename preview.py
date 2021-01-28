@@ -23,7 +23,7 @@ with serial.Serial('COM3', 1000000) as ser:
             for y in range(height):
                 for x in range(width):
                     idx = y * width + x
-                    v = struct.unpack('>H', raw[2*idx:2*(idx+1)])[0]
+                    v = struct.unpack('<H', raw[2*idx:2*(idx+1)])[0]
 
                     r, g, b = v >> (5 + 6), (v >> 5) & 0b111111, v & 0b11111 
 
