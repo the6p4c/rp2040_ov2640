@@ -19,6 +19,9 @@ int main() {
 
 	printf("\n\nBooted!\n");
 
+	gpio_init(PIN_LED);
+	gpio_set_dir(PIN_LED, GPIO_OUT);
+
 	struct ov2640_config config;
 	config.sccb = i2c0;
 	config.pin_sioc = PIN_CAM_SIOC;
@@ -45,10 +48,11 @@ int main() {
 
 	while (true) {
 		ov2640_capture_frame(&config);
+
+		gpio_put(PIN_LED, !gpio_get(PIN_LED));
+
 		printf("==FRAME==");
-		for (int i = 0; i < config.image_buf_size; ++i) {
-			uart_putc_raw(uart0, config.image_buf[i]);
-		}
+		uart_write_blocking(uart0, config.image_buf, config.image_buf_size);
 	}
 
 	return 0;
